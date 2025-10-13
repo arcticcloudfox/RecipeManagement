@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "users")
 @Getter
 @Setter
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue
@@ -23,6 +23,6 @@ public class Users {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private List<Recipes> recipes;
+    private List<Recipe> recipes;
 
 }

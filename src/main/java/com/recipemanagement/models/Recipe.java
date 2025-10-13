@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class Recipes {
+public class Recipe {
 
     @Id
     @GeneratedValue
@@ -32,5 +32,5 @@ public class Recipes {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Users user;
+    private User user;
 }
