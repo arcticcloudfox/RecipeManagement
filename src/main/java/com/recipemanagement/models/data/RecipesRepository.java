@@ -1,4 +1,7 @@
 package com.recipemanagement.models.data;
 
-public interface RecipesRepository {
+import com.recipemanagement.models.Recipes;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RecipesRepository extends JpaRepository<Recipes, Integer> {
 }
