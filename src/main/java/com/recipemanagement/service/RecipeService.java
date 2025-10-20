@@ -19,7 +19,7 @@ public class RecipeService {
         recipeRepository.save(recipe);
     }
 
-    public Recipe findRecipes(int recipeId) {
+    public Recipe findRecipe(int recipeId) {
         return recipeRepository.findById(recipeId).orElse(null);
     }
 
