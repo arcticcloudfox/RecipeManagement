@@ -1,36 +1,49 @@
 package com.recipemanagement.controllers;
 
 import com.recipemanagement.models.Recipe;
-import com.recipemanagement.service.RecipeService;
+import com.recipemanagement.models.User;
+import com.recipemanagement.models.data.RecipeRepository;
+import com.recipemanagement.models.data.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/recipes")
+import java.util.List;
+
+@RequestMapping("/recipe")
 public class RecipeManagementController {
 
-    //Put in userService file. Incorporate user methods into controller.
+    @Autowired
+    private RecipeRepository recipeRepository;
 
-    private final RecipeService recipeService;
+    @Autowired
+    private UserRepository userRepository;
 
-    public RecipeManagementController(RecipeService recipeService) {
-        this.recipeService = recipeService;
+    //retrieves recipes by id
+    @GetMapping("/{id}")
+    public String getRecipes(@PathVariable int id, Model model) {
+        Recipe recipe = (Recipe) recipeRepository.findRecipeById(id);
+        model.addAttribute("recipe", recipe);
+        return "view";
     }
 
-    @GetMapping("/{recipeId}")
-    public Recipe getRecipes(@PathVariable int recipeId) {
-        return recipeService.findRecipe(recipeId);
+    //shows the add form to add a recipe
+    @GetMapping("/add")
+    public String showAddForm(Model model) {
+        model.addAttribute("recipe", new Recipe());
+        return "add";
     }
 
-    @GetMapping
-    public Iterable<Recipe>getAllRecipes() {
-        return recipeService.getRecipes();
+    //gets task by specific user (will need to finish once authentication it implemented
+    @GetMapping("")
+    public String getAllRecipesByUser(Model model) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+
+        List<Recipe> recipes = recipeRepository.findByUser(user);
+        model.addAttribute("recipes", recipes);
+        return "index";
     }
-
-    @PutMapping("/{recipeId}")
-    public String updateRecipe(@PathVariable int recipeId, @RequestBody Recipe updatedRecipe) {
-        return recipeService.updateRecipe(recipeId, updatedRecipe);
-    }
-
-
 
 
 
