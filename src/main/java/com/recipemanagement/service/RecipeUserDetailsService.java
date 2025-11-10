@@ -5,11 +5,12 @@ import com.recipemanagement.models.data.UserRepository;
 import com.recipemanagement.security.RecipeUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RecipeUserDetailsService {
+public class RecipeUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
