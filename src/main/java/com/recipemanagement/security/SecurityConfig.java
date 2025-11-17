@@ -53,7 +53,9 @@ public class SecurityConfig {
                 .loginProcessingUrl("/loginUser")
                 .defaultSuccessUrl("/recipe", true)
                 .permitAll()
-                ).logout(logout -> logout.logoutSuccessUrl("/login")
+                ).logout(logout -> logout
+                        .logoutUrl("/logoutUser")
+                        .logoutSuccessUrl("/login")
                         .permitAll());
 
         return http.build();
