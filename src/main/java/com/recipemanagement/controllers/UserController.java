@@ -7,6 +7,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import com.recipemanagement.dto.SignUpDTO;
+import com.recipemanagement.dto.SignInDTO;
+
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -18,27 +22,40 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/signup")
-    public String signup(@ModelAttribute("user") User user, @RequestParam("confirmPassword") String confirmPassword) {
-        if (!user.getPassword().equals(confirmPassword)) {
+    public String signup(@ModelAttribute("signup") SignUpDTO dto) {
+        if (!dto.password.equals(dto.confirmPassword)) {
             return "redirect:/signup?error-passwordDidNotMatch";
         }
 
-        if (userRepository.existsByUsername(user.getUsername())) {
+        if (userRepository.existsByUsername(dto.username)) {
             return "redirect:/signup?error=usernameNotAvailable";
         }
 
-        String password = passwordEncoder.encode(user.getPassword());
-        user.setPassword(password);
+        User user = new User();
+        user.setUsername(dto.username);
+        user.setPassword(passwordEncoder.encode(dto.password));
 
         userRepository.save(user);
 
-        return "redirectL/login";
+        return "redirect:/login";
     }
 
     @GetMapping("/signup")
     public String registerUser(Model model) {
         model.addAttribute("title", "register");
         return "User/signup";
+    }
+
+    public String login(@ModelAttribute("login") SignInDTO dto) {
+        Optional<User> userOptional = userRepository.findByUsername(dto.username);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (passwordEncoder.matches(dto.password, user.getPassword())) {
+                return "redirect:/home";
+
+            }
+        }
+        return "redirect:/login?error=invalidCredentials";
     }
 
     @GetMapping("/login")
