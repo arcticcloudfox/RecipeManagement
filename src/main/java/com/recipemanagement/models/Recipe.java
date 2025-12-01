@@ -3,6 +3,7 @@ package com.recipemanagement.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Data;
 import lombok.Setter;
 import lombok.Getter;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Data
 public class Recipe {
 
     @Id
