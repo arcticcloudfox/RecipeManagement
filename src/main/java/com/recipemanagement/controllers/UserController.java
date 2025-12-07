@@ -13,6 +13,7 @@ import com.recipemanagement.dto.SignInDTO;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
