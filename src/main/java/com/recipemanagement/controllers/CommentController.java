@@ -37,13 +37,23 @@ public class CommentController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid User");
         }
 
-        Comment existing = commentRepository.findCommentById(commentId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found00"));
+        Comment existing = commentRepository.findCommentById(commentId);
+        if (existing == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found");
+        }
 
         existing.setComment(updatedComment.getComment());
         return commentRepository.save(existing);
     }
 
+    @DeleteMapping("delete/{commentId}")
     public String deleteComment(@PathVariable int commentId, @RequestParam String email) {
-        return userRepository.deleteComment(commentId, email);
+        User user = userRepository.findUserByEmail(email);
+        if(user == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid User");
+        }
+
+        commentRepository.deleteById(commentId);
+        return "Comment deleted";
     }
 }

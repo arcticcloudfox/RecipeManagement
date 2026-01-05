@@ -19,7 +19,7 @@ public class Comment {
     private int id;
 
     @Column(nullable = false)
-    private String text;
+    private String comment;
 
     @Column(name = "commenter_user_id")
     private int commenterUserId;
