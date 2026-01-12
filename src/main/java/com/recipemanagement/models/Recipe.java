@@ -20,7 +20,7 @@ public class Recipe {
     private int id;
 
     @NotBlank(message = "Recipe name is required!")
-    private String name;
+    private String recipeName;
 
     private String recipeType;
 

@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Recipe Management</title>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
 </head>
 <body>
+<h1>Add Recipe</h1>
+<section class="bg-light py-4">
+    <div class="container">
+        <form th:action="@{/recipe/add}" method="post" th:object="${recipe}">
+            <div class="mb-3">
+                <label th:for="recipeName"> Recipe Name: </label>
+                <input type="text" class="form-control" id="recipeName" th:field="*{recipeName}">
+            </div>
+            <div class="mb-3">
+                <label th:for="recipeType"> Recipe Type: </label>
+                <input type="text" class="form-control" id="recipeType" th:field="*{recipeType}">
+            </div>
+            <div class="mb-3">
+                <label th:for="ingredients"> Ingredients: </label>
+                <input type="text" class="form-control" id="ingredients" th:field="*{ingredients}">
+            </div>
+            <div class="mb-3">
+                <label th:for="instructions"> Instructions: </label>
+                <input type="text" class="form-control" id="instructions" th:field="*{instructions}">
+            </div>
+            <button type="submit" class="btn btn-primary"> Add Recipe </button>
+        </form>
+        <a th:href="@{/recipe}" class="btn btn-secondary mt-3">Back To Recipes</a>
+    </div>
+</section>
 
 </body>
 </html>

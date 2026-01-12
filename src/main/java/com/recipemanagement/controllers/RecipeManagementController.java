@@ -74,7 +74,7 @@ public class RecipeManagementController {
     public String editRecipe(@PathVariable int id, @ModelAttribute("recipe") Recipe recipeDetails) {
         Recipe recipe = (Recipe) recipeRepository.findRecipeById(id);
         recipe.setRecipeType(recipeDetails.getRecipeType());
-        recipe.setName(recipeDetails.getName());
+        recipe.setRecipeName(recipeDetails.getRecipeName());
         recipe.setIngredients(recipeDetails.getIngredients());
         recipe.setInstructions(recipeDetails.getInstructions());
         recipeRepository.save(recipe);
